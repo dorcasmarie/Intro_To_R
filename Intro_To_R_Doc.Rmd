@@ -1,0 +1,415 @@
+---
+title: "Introduction to R"
+author: "Dorcas Washington"
+date: "May 19, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Workshop Summary and Contact Information
+
+**Summary:** R is a free and powerful programming language that is commonly used by researchers in both qualitative and quantitative disciplines. R provides a near comprehensive, and still expanding set of research and data analysis tools. This workshop provides a gradual introduction to the basics of programming with R using R Studio. As a participant in this workshop you will accomplish the following: explore the R Studio interface, perform basic data manipulation, learn how to install and run packages, conduct simple data analyses, and produce basic data visualizations. The focus of this workshop will be hands-on exercises to provide a deeper and more effective understanding of R. No programming experience is required, and beginners are encouraged to attend.
+
+**Contact:**   
+Email: washids@uc.edu
+
+Virtual Location: https://ucincinnati.webex.com/meet/washids
+
+Physical Location : 240 Braunstein Hall (Geology-Math-Physics Library)
+
+Research & Data Services Website: https://libraries.uc.edu/digital-scholarship/data-services.html
+
+GitHub: dorcasmarie
+
+
+### **R Interface Basics**
+
+##### **R as a calculator**
+```{r, eval = FALSE}
+1+2
+```
+
+##### **Object and Assignments**
+```{r}
+x <- 1+2
+
+y <- x +1
+```
+
+##### **Naming Conventions**
+Keep names short, sweet, and relevent so anyone can follow your script!  
+  
+**Common Naming Conventions** 
+Snake Case: "i_use_snake_case"   
+Camel Case  "iUseCamelCase"  
+Periods "i.use.periods"  
+Combinations "iCant_decide.which_toUse"   
+  
+**Naming Hints**  
+R is case sensative, so x != X  
+Objects must start with a letter  
+Use only numbers, letters, and _
+
+##### **Understanding Functions**
+Function formating: function_name(arg1 = val1, arg2 = val2)  
+**HINT:** if you can't remember exactly what function you are looking we can use Tab    
+Now that you found the function, How do you use it?  
+**HINT:** Use the ? to find R documentation on an object  
+
+```{r, eval = FALSE}
+?seq()
+```
+##### <span style = "color:blue">**TASK 1A**</span>  
+How would you create a sequence of numbers from 1 to 10 using the seq() function?   
+```{r}
+
+```
+
+
+##### <span style="color:blue">**TASK 1B**</span>  
+How would you create a sequence of numbers from 1 to 10 by 0.5 and save it to an object called Seq?  
+Optional: Create a equal interval sequence from 1:20 that is 5 numbers long
+
+```{r}
+
+```
+
+### **Working with Data Tables**
+
+##### **Installing R package from CRAN Repository**
+To access specific packages, that are not on base R, you must install that package before you can you use it. However, you only have to install a package once (per computer).  
+
+Once the package is installed you have to run or open that package using the library function. This needs to be done everytime you open R Studio
+```{r, eval=FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+##### **Quibbles with Tibbles**
+Stolen from a tweet from Hadley Wickham  
+**Tibbles** are modified versions of data.frames which make life in R a little easier.  
+The tibble package and function is already installed under the tidyverse.  
+
+Here is an example of a tibble with 4 variables with 10 values using diffent methods 
+
+```{r, eval = FALSE}
+vignette("tibble")
+
+df_exp <- tibble::tibble(
+  a = seq(1,10),
+  b = rnorm(10),
+  c = c(11:20),
+  d = c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0)
+)
+```
+
+##### <span style="color:blue">**TASK 2A**</span>  
+What code would create a new tibble called "df" with two variables ("A" and "B") each with 20 different sets of observations?  
+  
+```{r}
+
+```
+
+
+##### **Adding a column with mutate**
+We will add a new column ("C"") to our table from <span style="color:blue">**TASK 2A**</span> using the mutate function from the dplyr package.    
+
+We also will need to use the pipe (%>%) function which allows us to continue code, similar to an "and do this". 
+**Hint** Using ctrl + shift + m is the shortcut key for pipe (%>%).  
+
+```{r, eval =FALSE}
+df <- df %>%
+  dplyr::mutate(C = A/B)
+```
+
+##### **Exploring a data table**
+Using brackets we can explore the values within certain positions of the table.  
+For example, we want to see all rows in column 2 or the first 5 rows in each coloumn.
+
+```{r, eval=FALSE}
+df[,2]
+df[5,]
+```
+
+##### <span style="color:blue">**TASK 2B**</span>  
+What code would return the value in row 10 of column 3? 
+
+```{r}
+
+```
+
+
+##### <span style="color:blue">**TASK 2C**</span>  
+Based on this idea, What code would return the 3rd through 5th rows for the 2nd and 3rd columns?  
+
+```{r}
+
+```
+
+##### **Saving a data table**
+Now that we have created our data set we want to save it as a CSV file.  
+
+```{r, eval=FALSE}
+write_csv(df, "C:/temp/my_table.csv")
+```
+
+
+### **Exploring and Summarizing Data**
+
+##### **Opening CSV Files**
+Using the read.csv function we can open the CSV table data we created from before.    
+
+```{r, eval=FALSE}
+df <- read.csv("C:/temp/my_table.csv")
+```
+
+##### **Adding a new column to a data set**
+We can add a new column to or existing data set by using the dollar sign ($) symbol with the name we want for our new column after symbol.  We want to add some non-numeric data to our table, so let use the letters a-t or letters that correspond to the 1st through 20th letter.  
+```{r, eval=FALSE}
+df$Name <- letters[1:20]
+```
+
+##### **Viewing a data set**
+We can view our data in multiple ways but typically this is done by clicking the data set in the top left corner under the environment tab or using the View() function.  
+
+Sometimes it is also important to view all of the columns or variables in a data set, this can be done using the names() function.  
+
+Examining the structure of the data set is extremely important especially when we need to run analyses or visualize your data.  
+
+**Hint** always view your data table and look at the structure of your data before working with a new data set.  
+
+```{r, eval=FALSE}
+View(df)
+names(df)
+str(df)
+```
+
+##### **Summarizing Data and Descriptive Statsitics**
+
+Another very helpful function is summary(), which provides the basic overview of your data including min, max, quartiles, median, etc.   
+
+If further statistical information is needed, use the stat.desc() function from the pastecs package as an effecient method to explore basic (similar to summary), descriptive statsitcal, and nromal distribution information. Use ?stat.desc for more information.  
+
+```{r, eval=FALSE}
+summary(df)
+
+#install.packages("pastecs")
+library(pastecs)
+?stat.desc()
+stat.desc(df)
+```
+
+### **Visualizing and Plotting Data**
+The R community has a choice between base R plotting and ggplot2  
+The community is split on which they prefer, but I find ggplot2 easier to teach and learn when new to R programming. 
+
+In order to use this package we must install and download ggplot2
+
+```{r, eval=FALSE}
+#install.packages("ggplot2")
+library("ggplot2")
+```
+
+We will use a predefined data set that is built into R for this section.
+
+The MPG data set is a table 234 observations and 11 variables focusing on car performance and efficieny. Load, view, and explore the dataset. 
+
+```{r, eval=FALSE}
+#Load and save the data set into our working environment
+mpg <- mpg
+
+#View and explore the data
+View(mpg)
+str(mpg)
+summary(mpg)
+```
+
+##### **The Grammar of Graphics**
+Don't Freak Out!
+```{r, eval=FALSE}
+ggplot(data = <DATA>) +   
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>),  
+                  stat = <STAT>,  
+                  position = <POSITION>) +  
+  <COORDINATE_FUNCTION> +  
+  <FACET_FUNCTION> +   
+  <SCALE_FUNCTION> +  
+  <THEME_FUNCTION>  
+```
+
+#####**Exploring Geoms**
+
+```{r, eval=FALSE}
+geom_
+geom_bar
+geom_point
+geom_boxplot
+geom_line
+geom_violin
+```
+
+##### **Creating Basic Data Visualizations**  
+
+**Bar Charts**   
+First lets look at a bar chart showing the counts of each class.
+
+```{r}
+library(ggplot2)
+ggplot(data=mpg) + 
+  geom_bar(mapping = aes(x=class))
+```
+
+By simply changing the x axis from class to manufacture we can create a new bar chart displaying the counts of each manufacture.  
+
+```{r}
+ggplot(data=mpg) + 
+  geom_bar(mapping = aes(x=manufacturer))
+```
+
+Once you are more comfortable with this process you can remove the arguement names to simplify the code.  
+
+```{r, eval=FALSE}
+ggplot(data=mpg) + 
+  geom_bar(mapping = aes(x=class))
+
+ggplot(data=mpg) + 
+  geom_bar(mapping = aes(x=manufacturer))
+```
+
+We can add another dimension to our chart to display counts by manufacturer with each manufacture total being separated into colors corresponding to cylinder counts.
+
+**Hint** Look back at the grammar of graphics template to see where position is be placed
+
+```{r}
+ggplot(data=mpg) + 
+  geom_bar(mapping = aes(x=manufacturer, fill = cyl),
+           position = "stack")
+```
+
+This doesn't look right! What went wrong? 
+**Hint** Examine the structure of the data again to see what type of data cyl is classified as.  
+
+We can fix this by manually changing the cyl column from a numeric value to a factor. Then re-running our code from above.  
+
+What stands out to you? Which manufacturers focus on performance, which on efficiency?
+
+```{r}
+mpg$cyl <- as.factor(mpg$cyl)
+ggplot(data=mpg) + geom_bar(mapping = aes(x=manufacturer, fill = cyl),
+                            position = "stack") 
+```
+
+**Scatter Plots**  
+Using scatter plots we can explore and compare two continuous varibles.  
+```{r}
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=cty, y=hwy))
+```
+
+We can evaluate additional variables with the addition of color, shapes, and sizes.  
+**Hint** Be aware that using too many colors, shapes, and sizes can conflate your message. Rule of thumb is to use less than 6 colors or shapes, and only use size for continuous variables.
+```{r}
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x=cty, y=hwy, color = class))
+```
+
+**Facet Grids**  
+Facets are extremely useful when you want to display information grouped by a specific variable.  
+For example we can show the same scatter plot from above but use facet to show each class within its own scatter plot window.  
+
+```{r}
+ggplot(data=mpg) + 
+  geom_point(mapping = aes(x=cty, y=hwy)) + 
+  facet_wrap(~class)
+```
+
+##### **Adding Graphical Elements**
+All the plots we have made so far are using the defaults.  
+These defaults are fine when quickly exploring data, but are not very aesthetically appealing.  
+We can use themes and lables to better present and explain our data.  
+
+There are many other tools, packages, and techniques that can utilized to manipulate the graphics in R, but this is beyond the scope of our intro workshop.  
+
+```{r}
+ggplot(data=mpg) + 
+  geom_point(mapping = aes(x=cty, y=hwy)) + 
+  facet_wrap(~class) +
+  theme_bw() +
+  labs(title = "Vehicle Fuel Efficiency", x="City\n(MPG)", y = "Highway\n(MPG)")
+```
+
+
+##### <span style = "color:blue">**TASK 4A**</span>  
+Lets put it all together and use the table you created from section 2 to your own data visualization.  
+
+```{r}
+
+```
+
+**Saving a Plot**
+Congratulations!!! You have successfully created your own data and data visualizion.  
+The final step is to save your plot using ggsave.
+```{r, eval=FALSE}
+ggsave(filename = "My_Plot",plot = my_plot, device = "png", path = "C:/temp")
+
+```
+
+
+### **Answers**
+##### <span style = "color:blue">**TASK 1A**</span>  
+How would you create a sequence of numbers from 1 to 10 using the seq() function?  
+```{r}
+seq(1,10)
+```
+
+##### <span style="color:blue">**TASK 1B**</span>  
+How would you create a sequence of numbers from 1 to 10 by 0.5 and save it to an object called Seq?  
+Optional: Create a equal interval sequence from 1:20 that is 5 numbers long  
+
+```{r}
+Seq <- seq(1,10, by =0.5) #define step by value
+Seq
+Seq2 <- seq(1,20, length.out = 5) #Defined number of values
+Seq2
+```
+
+##### <span style="color:blue">**TASK 2A**</span>  
+What code would create a new tibble called "df" with two variables ("A" and "B") each with 20 different sets of observations?  
+  
+```{r, eval =FALSE}
+df <- tibble::tibble(
+  A = seq(1,20),
+  B = rnorm(20)
+)
+df
+```
+
+##### <span style="color:blue">**TASK 2B**</span>  
+What code would return the value in row 10 of column 3? 
+
+```{r, eval =FALSE}
+df[10,3]
+```
+
+
+##### <span style="color:blue">**TASK 2C**</span>  
+Based on this idea, What code would return the 3rd through 5th rows for the 2nd and 3rd columns?  
+
+```{r, eval =FALSE}
+df[3:5,2:3]
+```
+
+##### <span style = "color:blue">**TASK 4A**</span>  
+Use the table you created from section 2 and create your own data visualization
+
+```{r, eval = FALSE}
+ggplot(data = df) + 
+  geom_point(aes(x=df$A, y=df$B, color = df$C)) +
+  theme_classic() +
+  labs(title = "My First R Plot", x="A", y = "B")
+```
+
