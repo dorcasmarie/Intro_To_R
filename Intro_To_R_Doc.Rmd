@@ -154,7 +154,7 @@ Based on this idea, What code would return the 3rd through 5th rows for the 2nd 
 Now that we have created our data set we want to save it as a CSV file.  
 
 ```{r, eval=FALSE}
-write_csv(df, "C:/temp/my_table.csv")
+write_csv(df, "my_table.csv")
 ```
 
 
@@ -164,7 +164,7 @@ write_csv(df, "C:/temp/my_table.csv")
 Using the read.csv function we can open the CSV table data we created from before.    
 
 ```{r, eval=FALSE}
-df <- read.csv("C:/temp/my_table.csv")
+df <- read.csv("my_table.csv")
 ```
 
 ##### **Adding a new column to a data set**
@@ -354,7 +354,7 @@ Lets put it all together and use the table you created from section 2 to your ow
 Congratulations!!! You have successfully created your own data and data visualizion.  
 The final step is to save your plot using ggsave.
 ```{r, eval=FALSE}
-ggsave(filename = "My_Plot",plot = my_plot, device = "png", path = "C:/temp")
+ggsave(filename = "My_Plot",plot = my_plot, device = "png")
 
 ```
 
