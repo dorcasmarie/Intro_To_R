@@ -6,7 +6,7 @@ COPY . ${HOME}
 RUN chown -R root:users /root/
 
 ## Become normal user again
-USER ${NB_USER}
+USER users
 
 ## Run an install.R script, if it exists.
 RUN if [ -f install.R ]; then R --quiet -f install.R; fi
