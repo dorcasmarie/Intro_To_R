@@ -154,7 +154,7 @@ Based on this idea, What code would return the 3rd through 5th rows for the 2nd 
 Now that we have created our data set we want to save it as a CSV file.  
 
 ```{r, eval=FALSE}
-write_csv(df, "my_table.csv")
+write.csv(df, "my_table.csv")
 ```
 
 
@@ -355,6 +355,7 @@ Congratulations!!! You have successfully created your own data and data visualiz
 The final step is to save your plot using ggsave.
 ```{r, eval=FALSE}
 ggsave(filename = "My_Plot",plot = my_plot, device = "png")
+# allows you to save but can't open because it's binary...
 
 ```
 
